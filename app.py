@@ -28,7 +28,7 @@ def index():
 
 @app.route('/inventario')
 def inventario():
-    sql="SELECT `libro`.`id_libro`, `libro`.`nombre_libro`, `categorias`.`categoria`, `libro`.`autor_libro`, `libro`.`url_foto` FROM `biblioteca`.`libro` INNER JOIN `categorias` ON `libro`.`id_categoria` = `categorias`.`id_categoria`;"
+    sql="SELECT `inventario`.`id_stock`, `inventario`.`nombre_libro`, `categorias`.`categoria`, `inventario`.`autor`, `inventario`.`url_foto` FROM `biblioteca`.`inventario` WHERE `disponibilidad`=1 INNER JOIN `categorias` ON `inventario`.`id_categoria` = `categorias`.`id_categoria`;"
     conn=mysql.connect()        # hacemos la conexion a mysql
     cursor=conn.cursor()
     cursor.execute(sql)     # ejecucion del string sql
