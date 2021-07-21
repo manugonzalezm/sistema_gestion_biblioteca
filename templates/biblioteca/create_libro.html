@@ -1,0 +1,45 @@
+{% include 'header.html' %}
+    <nav class="p-1 bg-info" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('index')}}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Añadir nuevo libro a la Base de datos</li>
+        </ol>
+    </nav>
+    <div class="container">
+        <form class="row g-3 p-5" method="post" action="/store_libro" enctype="multipart/form-data">
+            <div class="col-md-6">
+                <label class="form-label" for="txtNombre">Nombre:</label>
+                <input class="form-control" type="text" name="txtNombre" id="txtNombre" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtCategoria">Categoría:</label>
+                <select class="form-select" name="txtCategoria" aria-label="txtCategoria" id="txtCategoria" required>
+                    <option selected disabled value="">Elegir categoría</option>
+                    <option value="1">Ciencia Ficción</option>
+                    <option value="2">Romance</option>
+                    <option value="3">Aventura</option>
+                    <option value="4">Distópico</option>
+                    <option value="5">Policial</option>
+                    <option value="6">Fantasía</option>
+                    <option value="7">Terror</option>
+                    <option value="8">Misterio</option>
+                    <option value="9">Libros Técnicos</option>
+                    <option value="10">Idiomas</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtFoto">Foto de portada:</label>
+                <input class="form-control" type="file" name="txtFoto" id="txtFoto">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtAutor">Autor:</label>
+                <input class="form-control" type="text" name="txtAutor" id="txtAutor" required>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Agregar</button>
+            </div>
+            <div>
+                <input style="display:none" class="form-control" type="text" name="txtDisp" id="txtDisp" value=1>
+            </div>
+        </form>
+{% include 'footer.html' %}

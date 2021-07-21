@@ -1,0 +1,26 @@
+{% include 'header.html' %}
+    <nav class="p-1 bg-info" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('index')}}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Crear nuevo usuario</li>
+        </ol>
+    </nav>
+    <div class="container">
+        <form class="row g-3 p-5" method="post" action="/store" enctype="multipart/form-data">
+            <div class="col-md-6">
+                <label class="form-label" for="txtNombre">Nombre:</label>
+                <input class="form-control" type="text" name="txtNombre" id="txtNombre" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtCorreo">Correo:</label>
+                <input class="form-control" type="text" name="txtCorreo" id="txtCorreo" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtFoto">Foto:</label>
+                <input class="form-control" type="file" name="txtFoto" id="txtFoto" required>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Agregar</button>
+            </div>
+        </form>
+{% include 'footer.html' %}

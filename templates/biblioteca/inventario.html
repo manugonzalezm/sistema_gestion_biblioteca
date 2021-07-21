@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+    <div class="container">
+        <div class="table-responsive shadow-lg">
+            <table class="table table-light table-hover align-middle">
+                <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Foto</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for libro in libros %}
+                    <tr>
+                        <td>{{libro[0]}}</td> <!--Id-->
+                        <td>
+                            <img src="{{ url_for('uploads', nombreFoto=libro[4]) }}" class="img-thumbnail" width="100" alt="Portada del libro">
+                        </td> <!--Foto-->
+                        <td>{{libro[1]}}</td> <!--Nombre-->
+                        <td>{{libro[2]}}</td> <!--Correo-->
+                        <td class="text-center"><a class="btn btn-warning" href="/edit_libro/{{libro[0]}}"><i class="fas fa-book"></i> Prestar</a> | 
+                            <a class="btn btn-info" href="/edit_libro/{{libro[0]}}"><i class="fas fa-edit"></i> Editar información</a> | 
+                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar al libro?')" href="/destroy_libro/{{libro[0]}}"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% include 'footer.html' %}

@@ -1,0 +1,31 @@
+{% include 'header.html' %}
+    <div class="container">
+        <div class="table-responsive shadow-lg">
+            <table class="table table-light table-hover align-middle">
+                <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Foto</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empleado in empleados %}
+                    <tr>
+                        <td>{{empleado[0]}}</td> <!--Id-->
+                        <td>
+                            <img src="{{ url_for('uploads', nombreFoto=empleado[3]) }}" class="img-thumbnail" width="100" alt="fotoEmpleado">
+                        </td> <!--Foto-->
+                        <td>{{empleado[1]}}</td> <!--Nombre-->
+                        <td>{{empleado[2]}}</td> <!--Correo-->
+                        <td class="text-center"><a class="btn btn-info" href="/edit/{{empleado[0]}}">Editar</a> | 
+                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar al empleado?')" href="/destroy/{{empleado[0]}}">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% include 'footer.html' %}
