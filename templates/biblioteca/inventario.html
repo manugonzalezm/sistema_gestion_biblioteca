@@ -1,5 +1,28 @@
 {% include 'header.html' %}
     <div class="container">
+
+        <form class="d-flex" method="post" action="/search" enctype="multipart/form-data">
+            <input class="form-control me-2" type="text" name="titulo" placeholder="Buscar por título" id="titlo" aria-label="titulo">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <form method="post" action="/filter" > <!-- note action -->
+            <select name="categoria" id="categoria" class="form-select" aria-label="Filtro por categoría"> <!-- note the name -->
+                <option value="Todos" SELECTED>Todos</option>
+                {% for catg in categorias %}
+
+                    <option value="{{catg[0]}}">{{catg[0]}}</option>
+
+                {% endfor %}
+            </select>
+            <button class="btn btn-outline-success" type="submit">Filtrar</button>
+        </form>
+
+        <form method="post" action="/search" enctype="multipart/form-data">
+            <input type="text" name="titulo" placeholder="Ingrese titulo del libro" id="titlo">
+            <button type="submit">Buscar</button>
+        </form>
+            
         <div class="table-responsive shadow-lg">
             <table class="table table-light table-hover align-middle">
                 <thead class="thead-light">

@@ -6,13 +6,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
     <script src="https://kit.fontawesome.com/73e12dbc57.js" crossorigin="anonymous"></script>
-    <title>Registro de empleados</title>
+    <title>BiblioTech</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="{{url_for('index')}}">Sistema Web</a>
+              <a class="navbar-brand" href="{{url_for('index')}}" id="title"><i class="fas fa-book"></i> BiblioTech</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -22,13 +22,15 @@
                     <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('nuevo_libro')}}">Añadir nuevo libro</a>
+                    <a class="nav-link mx-5 active" href="{{url_for('nuevo_libro')}}">Añadir nuevo libro</a>
+                  </li>
+                  <li>
+                    <a class="nav-link active" href="{{url_for('inventario')}}">Inventario</a>
+                  </li>
+                  <li>
+                    <a class="nav-link mx-5 active" href="{{url_for('prestamos')}}">Préstamos</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
               </div>
             </div>
           </nav>

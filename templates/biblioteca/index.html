@@ -1,5 +1,65 @@
 {% include 'header.html' %}
-    <img src="{{ url_for('uploads', nombreFoto='index-portada.jpg') }} id="indexPortada">
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner" id="indexPortada">
+      <div class="carousel-item active">
+        <img src="{{ url_for('uploads', nombreFoto='index-portada.jpg') }}" class="d-block w-100" alt="biblioteca">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ url_for('uploads', nombreFoto='index-portada.jpg') }}" class="d-block w-100" alt="biblioteca">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ url_for('uploads', nombreFoto='index-portada.jpg') }}" class="d-block w-100" alt="biblioteca">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
     <div class="container">
+        <div class="row">
+            <div class="col-6 container-tarjeta my-5">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body bg-success">
+                        <h5 class="card-title">Libros disponibles</h5>
+                        <p class="card-text">Para ver los libros que no se encuentran prestados haz click aquí.</p>
+                        <a href="{{url_for('inventario')}}" class="btn btn-dark">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 container-tarjeta my-5">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body bg-danger">
+                        <h5 class="card-title">Libros Prestados</h5>
+                        <p class="card-text">Para ver los libros que se encuentran prestados haz click aquí.</p>
+                        <a href="{{url_for('prestamos')}}" class="btn btn-dark">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 container-tarjeta my-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body bg-info">
+                        <h5 class="card-title">Historial de Préstamos</h5>
+                        <p class="card-text">Para ver todos los préstamos que han sido realizados hasta la fecha haz click aquí.</p>
+                        <a href="{{url_for('prestamos')}}" class="btn btn-dark">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 container-tarjeta my-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body bg-primary">
+                        <h5 class="card-title">Añadir libro</h5>
+                        <p class="card-text">Para agregar al inventario un libro nuevo haz click aquí.</p>
+                        <a href="{{url_for('nuevo_libro')}}" class="btn btn-dark">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 {% include 'footer.html' %}

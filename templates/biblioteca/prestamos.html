@@ -1,5 +1,23 @@
 {% include 'header.html' %}
     <div class="container">
+
+        <form class="d-flex" method="post" action="/searchP" enctype="multipart/form-data">
+            <input class="form-control me-2" type="text" name="titulo" placeholder="Buscar por título" id="titlo" aria-label="titulo">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <form method="post" action="/filterP" > <!-- note action -->
+            <select name="categoria" id="categoria" class="form-select" aria-label="Filtro por categoría"> <!-- note the name -->
+                <option value="Todos" SELECTED>Todos</option>
+                {% for catg in categorias %}
+
+                    <option value="{{catg[0]}}">{{catg[0]}}</option>
+
+                {% endfor %}
+            </select>
+            <button class="btn btn-outline-success" type="submit">Filtrar</button>
+        </form>
+
         <div class="table-responsive shadow-lg">
             <table class="table table-light table-hover align-middle">
                 <thead class="thead-light">
@@ -12,16 +30,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for empleado in empleados %}
+                    {% for prestamo in prestamos %}
                     <tr>
-                        <td>{{empleado[0]}}</td> <!--Id-->
+                        <td>{{prestamo[0]}}</td> <!--Id-->
                         <td>
-                            <img src="{{ url_for('uploads', nombreFoto=empleado[3]) }}" class="img-thumbnail" width="100" alt="fotoEmpleado">
+                            <img src="{{ url_for('uploads', nombreFoto=prestamo[4]) }}" class="img-thumbnail" width="100" alt="{{prestamo[1]}}">
                         </td> <!--Foto-->
-                        <td>{{empleado[1]}}</td> <!--Nombre-->
-                        <td>{{empleado[2]}}</td> <!--Correo-->
-                        <td class="text-center"><a class="btn btn-info" href="/edit/{{empleado[0]}}">Editar</a> | 
-                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar al empleado?')" href="/destroy/{{empleado[0]}}">Eliminar</a>
+                        <td>{{prestamo[1]}}</td> <!--Nombre-->
+                        <td>{{prestamo[2]}}</td> <!--Correo-->
+                        <td class="text-center"><a class="btn btn-info" href="/edit/{{prestamo[0]}}">Editar</a> | 
+                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar al prestamo?')" href="/destroy/{{prestamos[0]}}">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}

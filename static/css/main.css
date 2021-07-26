@@ -1,0 +1,44 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+img{
+    object-fit: cover;
+}
+
+#indexPortada{
+    height: 40vh;
+    width: 100%;
+}
+
+#indexPortada *{
+    color: green;
+    font-weight: bold;
+}
+
+.container-tarjeta{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-tarjeta div{
+    text-align: center;
+}
+
+.container-tarjeta div{
+    border-radius: 1rem;
+}
+
+#title{
+    flex-grow: 1;
+}
+
+#breadcrumbs{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}

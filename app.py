@@ -28,16 +28,43 @@ def index():
 
 @app.route('/inventario')
 def inventario():
-    sql="SELECT `inventario`.`id_stock`, `inventario`.`nombre_libro`, `categorias`.`categoria`, `inventario`.`autor`, `inventario`.`url_foto` FROM `biblioteca`.`inventario` WHERE `disponibilidad`=1 INNER JOIN `categorias` ON `inventario`.`id_categoria` = `categorias`.`id_categoria`;"
+    sql="SELECT `inventario`.`id_stock`, `inventario`.`nombre_libro`, `categorias`.`categoria`, `inventario`.`autor`, `inventario`.`url_foto` FROM `biblioteca`.`inventario` INNER JOIN `categorias` ON `inventario`.`id_categoria` = `categorias`.`id_categoria` WHERE `inventario`.`disponibilidad`=1;"
     conn=mysql.connect()        # hacemos la conexion a mysql
     cursor=conn.cursor()
     cursor.execute(sql)     # ejecucion del string sql
     libros=cursor.fetchall()     #traemos toda la informacion
     print(libros)        #imprimimos los datos en la terminal
     conn.commit()
-    return render_template('biblioteca/inventario.html', libros=libros)      # permite renderizar index.html en el navegador
+
+    sql="SELECT `categorias`.`categoria` FROM `inventario` INNER JOIN `categorias` ON `inventario`.`id_categoria` = `categorias`.`id_categoria` WHERE `inventario`.`disponibilidad`=1;"
+    conn=mysql.connect() # hacemos la conexion a mysql
+    cursor=conn.cursor()
+    cursor.execute(sql) # ejecutamos el string sql
+    conn.commit()
+
+    categorias=cursor.fetchall()
+
+    return render_template('biblioteca/inventario.html',libros=libros, categorias=categorias)
 
 @app.route('/prestamos')
+def prestamos():
+    sql="SELECT `inventario`.`id_stock`, `inventario`.`nombre_libro`, `socios`.`nombre_socio`, `inventario`.`fecha_devolucion`, `inventario`.`url_foto` FROM `biblioteca`.`inventario` INNER JOIN `socios` ON `inventario`.`id_socio` = `socios`.`id_socio` WHERE `inventario`.`disponibilidad`=0;"
+    conn=mysql.connect()        # hacemos la conexion a mysql
+    cursor=conn.cursor()
+    cursor.execute(sql)     # ejecucion del string sql
+    prestamos=cursor.fetchall()     #traemos toda la informacion
+    print(prestamos)        #imprimimos los datos en la terminal
+    conn.commit()
+
+    sql="SELECT categorias.categoria FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE `inventario`.`disponibilidad`=0;"
+    conn=mysql.connect() # hacemos la conexion a mysql
+    cursor=conn.cursor()
+    cursor.execute(sql) # ejecutamos el string sql
+    conn.commit()
+
+    categorias=cursor.fetchall()
+
+    return render_template('biblioteca/prestamos.html',prestamos=prestamos, categorias=categorias)
 
 @app.route('/historial_prestamos')
 
@@ -88,6 +115,90 @@ def storage_prestamo():
     cursor.execute(sql,datos)       #ejecuta la sentencia sql
     conn.commit()
     return redirect('/')      #y renderiza el index.html
+
+@app.route('/search', methods=['POST'])
+def search():
+    _busq="%"+request.form['titulo']+"%"
+    datos=(_busq)
+    sql="SELECT inventario.id_stock, inventario.nombre_libro, categorias.categoria, inventario.autor, inventario.url_foto FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE inventario.nombre_libro LIKE %s; "
+    conn=mysql.connect()
+    cursor=conn.cursor()
+    cursor.execute(sql,datos)
+    conn.commit()
+
+    libros=cursor.fetchall()
+    if (len(_busq) == 0):
+        return inventario()
+    else:
+        return render_template('biblioteca/inventario.html',libros=libros)
+
+
+@app.route('/filter', methods=['POST'])
+def fltr():
+    _fil=request.form['categoria']
+    if (_fil == "Todos"):
+        return inventario()
+    datos=(_fil)
+    sql="SELECT inventario.id_stock, inventario.nombre_libro, categorias.categoria, inventario.autor, inventario.url_foto FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE categorias.categoria LIKE %s; "
+    conn=mysql.connect()
+    cursor=conn.cursor()
+    cursor.execute(sql,datos)
+    conn.commit()
+
+    libros=cursor.fetchall()
+
+    sql="SELECT categorias.categoria FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE `inventario`.`disponibilidad`=1;"
+    conn=mysql.connect() # hacemos la conexion a mysql
+    cursor=conn.cursor()
+    cursor.execute(sql) # ejecutamos el string sql
+    conn.commit()
+
+    categorias=cursor.fetchall()
+
+    return render_template('biblioteca/inventario.html',libros=libros, categorias=categorias)
+
+@app.route('/searchP', methods=['POST'])
+def searchP():
+    _busq="%"+request.form['titulo']+"%"
+    datos=(_busq)
+    sql="SELECT inventario.id_stock, inventario.nombre_libro, socios.nombre_socio, inventario.fecha_devolucion, inventario.url_foto FROM inventario INNER JOIN socios ON inventario.id_socio = socios.id_socio WHERE inventario.nombre_libro LIKE %s"
+    conn=mysql.connect()
+    cursor=conn.cursor()
+    cursor.execute(sql,datos)
+    conn.commit()
+
+    prestamos=cursor.fetchall()
+    if (len(_busq) == 0):
+        return prestamos()
+    else:
+        return render_template('biblioteca/prestamos.html', prestamos=prestamos)  
+
+
+
+@app.route('/filterP', methods=['POST'])
+def fltrP():
+    _fil=request.form['categoria']
+    if (_fil == "Todos"):
+        return prestamos()
+    datos=(_fil)
+    sql="SELECT inventario.id_stock, inventario.nombre_libro, categorias.categoria, inventario.autor, inventario.url_foto FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE categorias.categoria LIKE %s;"
+    conn=mysql.connect()
+    cursor=conn.cursor()
+    cursor.execute(sql,datos)
+    conn.commit()
+
+    prestamo=cursor.fetchall()
+
+    sql="SELECT categorias.categoria FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE inventario.disponibilidad=0;"
+    conn=mysql.connect() # hacemos la conexion a mysql
+    cursor=conn.cursor()
+    cursor.execute(sql) # ejecutamos el string sql
+    conn.commit()
+
+    categorias=cursor.fetchall()
+
+    return render_template('biblioteca/prestamos.html', prestamos=prestamo, categorias=categorias)
+
 
 @app.route('/destroy_libro/<int:id>')     #recibe como parametro el id del registro
 def destroy_libro(id):
