@@ -37,8 +37,3 @@ img{
     flex-grow: 1;
 }
 
-#breadcrumbs{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-}

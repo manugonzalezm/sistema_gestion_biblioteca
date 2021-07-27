@@ -1,0 +1,31 @@
+{% include 'header.html' %}
+    <div class="container">
+
+        <h3 class="m-3">Socios</h3>
+        
+        <a href="{{url_for('nuevo_socio')}}" class="btn btn-success m-3">
+            Añadir nuevo socio
+        </a>
+
+        <div class="table-responsive shadow-lg">
+            <table class="table table-light table-hover align-middle">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for socio in socios %}
+                    <tr>
+                        <td>{{socio[0]}}</td> <!--Id-->
+                        <td>{{socio[1]}}</td> <!--Nombre-->
+                        <td>{{socio[2]}}</td> <!--Nombre-->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% include 'footer.html' %}

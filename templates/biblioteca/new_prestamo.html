@@ -1,0 +1,46 @@
+{% include 'header.html' %}
+
+    <nav class="p-2 bg-info" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url_for('index')}}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Añadir un nuevo préstamo a la Base de datos</li>
+        </ol>
+    </nav>
+    <div class="container">
+        {% for libro in libros %}
+        <h4 class="m-3">Prestar el libro: "{{libro[1]}}"</h4>
+        {% endfor %}
+        <form class="row g-3 p-5" method="post" action="/store_prestamo" enctype="multipart/form-data">
+            <div class="col-md-6">
+                <label class="form-label" for="txtID">ID del Socio:</label>
+                <input class="form-control" type="text" name="txtID" id="txtID" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtCorreo">Fecha de devolución:</label>
+                <input class="form-control" type="date" id="txtFecha" name="txtFecha" value="2018-07-22" min="2021-07-27" max="2040-07-27">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Agregar</button>
+            </div>
+        </form>
+
+        <div class="table-responsive shadow-lg">
+            <table class="table table-light table-hover align-middle">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Socio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for socio in socios %}
+                    <tr>
+                        <td>{{socio[0]}}</td> <!--Id-->
+                        <td>{{socio[1]}}</td> <!--Nombre-->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% include 'footer.html' %}

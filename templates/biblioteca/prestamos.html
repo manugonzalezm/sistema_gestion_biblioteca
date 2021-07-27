@@ -1,45 +1,56 @@
 {% include 'header.html' %}
     <div class="container">
 
-        <form class="d-flex" method="post" action="/searchP" enctype="multipart/form-data">
-            <input class="form-control me-2" type="text" name="titulo" placeholder="Buscar por título" id="titlo" aria-label="titulo">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-
-        <form method="post" action="/filterP" > <!-- note action -->
-            <select name="categoria" id="categoria" class="form-select" aria-label="Filtro por categoría"> <!-- note the name -->
-                <option value="Todos" SELECTED>Todos</option>
-                {% for catg in categorias %}
-
-                    <option value="{{catg[0]}}">{{catg[0]}}</option>
-
-                {% endfor %}
-            </select>
-            <button class="btn btn-outline-success" type="submit">Filtrar</button>
-        </form>
+        <div class="row my-5">
+            <div class="col-6">
+                <form class="d-flex" method="post" action="/searchP" enctype="multipart/form-data">
+                    <input class="form-control me-2" type="text" name="titulo" placeholder="Buscar por título" id="titlo" aria-label="titulo">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <form method="post" action="/filterP" > <!-- note action -->
+                    <div class="row">
+                        <div class="col-8">
+                            <select name="categoria" id="categoria" class="form-select" aria-label="Filtro por categoría"> <!-- note the name -->
+                                <option value="Todos" SELECTED>Todos</option>
+                                {% for catg in categorias %}
+                
+                                    <option value="{{catg[0]}}">{{catg[0]}}</option>
+                
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-outline-success" type="submit">Filtrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div class="table-responsive shadow-lg">
             <table class="table table-light table-hover align-middle">
                 <thead class="thead-light">
                     <tr>
-                        <th>#</th>
                         <th>Foto</th>
                         <th>Nombre</th>
-                        <th>Correo</th>
+                        <th>Socio</th>
+                        <th>Devolución</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for prestamo in prestamos %}
                     <tr>
-                        <td>{{prestamo[0]}}</td> <!--Id-->
                         <td>
                             <img src="{{ url_for('uploads', nombreFoto=prestamo[4]) }}" class="img-thumbnail" width="100" alt="{{prestamo[1]}}">
                         </td> <!--Foto-->
                         <td>{{prestamo[1]}}</td> <!--Nombre-->
-                        <td>{{prestamo[2]}}</td> <!--Correo-->
-                        <td class="text-center"><a class="btn btn-info" href="/edit/{{prestamo[0]}}">Editar</a> | 
-                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar al prestamo?')" href="/destroy/{{prestamos[0]}}">Eliminar</a>
+                        <td>{{prestamo[2]}}</td> <!--Socio-->
+                        <td>{{prestamo[3]}}</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" onclick="return confirm('¿Desea devolver el libro?')" href="/devolver_libro/{{prestamos[0]}}">Devolver</a>
                         </td>
                     </tr>
                     {% endfor %}

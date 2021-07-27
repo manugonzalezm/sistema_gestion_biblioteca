@@ -1,8 +1,8 @@
 {% include 'header.html' %}
-    <nav class="p-1 bg-info" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <nav class="p-2 bg-info" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{url_for('index')}}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Añadir nuevo libro a la Base de datos</li>
+            <li class="breadcrumb-item"><a href="{{url_for('index')}}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Añadir nuevo libro a la Base de datos</li>
         </ol>
     </nav>
     <div class="container">
@@ -37,9 +37,6 @@
             </div>
             <div class="col-12">
                 <button class="btn btn-primary" type="submit">Agregar</button>
-            </div>
-            <div>
-                <input style="display:none" class="form-control" type="text" name="txtDisp" id="txtDisp" value=1>
             </div>
         </form>
 {% include 'footer.html' %}
