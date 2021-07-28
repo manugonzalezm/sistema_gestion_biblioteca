@@ -33,7 +33,7 @@
             <table class="table table-light table-hover align-middle">
                 <thead class="thead-light">
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th>Foto</th>
                         <th>Nombre</th>
                         <th>Categoría</th>
@@ -51,7 +51,7 @@
                         <td>{{libro[2]}}</td> <!--Correo-->
                         <td class="text-center"><a class="btn btn-warning" href="/prestar/{{libro[0]}}"><i class="fas fa-book"></i> Prestar</a> | 
                             <a class="btn btn-info" href="/edit_libro/{{libro[0]}}"><i class="fas fa-edit"></i> Editar información</a> | 
-                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar al libro?')" href="/destroy_libro/{{libro[0]}}"><i class="fas fa-trash-alt"></i></a>
+                            <a class="btn btn-danger" onclick="return confirm('¿Desea borrar el libro?')" href="/destroy_libro/{{libro[0]}}"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

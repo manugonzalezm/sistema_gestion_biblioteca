@@ -10,7 +10,7 @@
     <form class="row g-3 p-5" method="post" action="/update" enctype="multipart/form-data">
         <div class="col-md-2">
             <label class="form-label" for="txtID">ID:</label>
-            <input class="form-control" type="text" value="{{libro[0]}}" name="txtID" id="txtID" disabled>
+            <input class="form-control" type="text" value="{{libro[0]}}" name="txtID" id="txtID">
         </div>
         <div class="col-md-5">
             <label class="form-label" for="txtNombre">Nombre:</label>
@@ -20,28 +20,12 @@
             <label class="form-label" for="txtAutor">Autor:</label>
             <input class="form-control" type="text" value="{{libro[2]}}" name="txtAutor" id="txtAutor">
         </div>
-        <div class="col-md-6">
-            <label class="form-label" for="txtIdCategoria">Categoría:</label>
-            <select class="form-select" name="txtIdCategoria" aria-label="txtIdCategoria" id="txtIdCategoria">
-                <option selected disabled value="">Elegir categoría</option>
-                <option value="1">Ciencia Ficción</option>
-                <option value="2">Romance</option>
-                <option value="3">Aventura</option>
-                <option value="4">Distópico</option>
-                <option value="5">Policial</option>
-                <option value="6">Fantasía</option>
-                <option value="7">Terror</option>
-                <option value="8">Misterio</option>
-                <option value="9">Libros Técnicos</option>
-                <option value="10">Idiomas</option>
-            </select>
-        </div>
         <div class="col-12">
             <label class="form-label" for="txtFoto">
                 Foto actual:
-                    <img class="img-thumbnail" width="100" src="{{url_for('uploads', nombreFoto=libro[4])}}" alt="foto actual">
+                    <img class="img-thumbnail" width="100" src="{{url_for('uploads', nombreFoto=libro[3])}}" alt="foto actual">
             </label>
-            <input  class="form-control" type="file" name="txtFoto" id="txtFoto">
+            <input  class="form-control" type="file" name="txtFoto" id="txtFoto" value="{{libro[3]}}">
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Editar</button>

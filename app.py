@@ -66,14 +66,27 @@ def prestamos():
 
     return render_template('biblioteca/prestamos.html',prestamos=prestamos, categorias=categorias)
 
-@app.route('/devolver_libro/<int:id>', methods=['POST'])
-def devolver(id):
+@app.route('/devolver_libro/<int:id>')
+def devolver_libro(id):
     conn = mysql.connect()   #se conecta a la conexion mysql.init_app(app)
     cursor = conn.cursor()   #almacena lo que ejecutamos
-    cursor.execute("UPDATE `biblioteca`.`inventario` SET `id_socio`= '', `disponibilidad ='1', `fecha_devolucion`='' WHERE `id_stock` = %s;",(id))
-    conn.commit()
+    cursor.execute("SELECT inventario.id_stock, inventario.nombre_libro, socios.nombre_socio, inventario.fecha_devolucion, inventario.url_foto FROM inventario INNER JOIN socios ON inventario.id_socio = socios.id_socio WHERE id_stock=%s;", (id))     #ejecuta la sentencia SQL sobre el id
+    libros=cursor.fetchall()    #traemos toda la informacion
+    conn.commit()    #cerramos la conexion
+    return render_template('biblioteca/confirm_devolucion.html', libros=libros)
 
-    return redirect('/prestamos')
+@app.route("/devolver", methods=['POST'])
+def devolver():
+    id=request.form['txtID'];
+
+    sql = "UPDATE `biblioteca`.`inventario` SET `id_socio`=null, `disponibilidad`=1, `fecha_devolucion`=null WHERE (`id_stock`=%s);"
+    datos=(id)
+    conn=mysql.connect()
+    cursor=conn.cursor()
+    cursor.execute(sql,datos)
+    conn.commit()
+    
+    return redirect('/inventario')
 
 @app.route('/socios')
 def socios():
@@ -99,22 +112,14 @@ def storage_libro():
         nuevoNombreFoto=_foto.filename   #concatena el nombre
         _foto.save("uploads/"+nuevoNombreFoto)  #lo guarda en la carpeta
 
-    sql = "INSERT INTO `biblioteca`.`libro` (`id_libro`,`nombre_libro`,`id_categoria`, `autor_libro`,`url_foto`) VALUES (null,%s,%s,%s,%s);"
+    sql = "INSERT INTO `biblioteca`.`inventario` (`id_stock`,`nombre_libro`,`id_categoria`, `autor`, `url_foto`, `disponibilidad`) VALUES (null,%s,%s,%s,%s,1);"
     datos = (_nombre,_categoria,_autor,nuevoNombreFoto)
     conn=mysql.connect()
     cursor=conn.cursor()
     cursor.execute(sql,datos)       #ejecuta la sentencia sql
     conn.commit()
 
-    sql="SELECT categorias.categoria FROM inventario INNER JOIN categorias ON inventario.id_categoria = categorias.id_categoria WHERE `inventario`.`disponibilidad`=1;"
-    conn=mysql.connect() # hacemos la conexion a mysql
-    cursor=conn.cursor()
-    cursor.execute(sql) # ejecutamos el string sql
-    conn.commit()
-
-    categorias=cursor.fetchall()
-
-    return redirect('/inventario', categorias=categorias)
+    return redirect('/inventario')
 
 @app.route('/prestar/<int:id>')       #para el ruteo de create.html
 def prestar(id):
@@ -135,9 +140,10 @@ def prestar(id):
 def storage_prestamo():
     id = request.form['txtID']     #toma los datos que envio el form en txtNombre
     _fecha = request.form['txtFecha']
+    _idLibro = request.form['txtIdLibro']
 
-    sql = "UPDATE `biblioteca`.`inventario` SET `id_socio`=%s, `fecha_devolucion`=%s `disponibilidad`=0 WHERE id=%s;"
-    datos=(id,_fecha)
+    sql = "UPDATE `biblioteca`.`inventario` SET `id_socio`=%s, `fecha_devolucion`=%s, `disponibilidad`='0' WHERE id_stock=%s;"
+    datos=(id,_fecha,_idLibro)
 
     conn=mysql.connect()
     cursor=conn.cursor()
@@ -261,7 +267,7 @@ def destroy_libro(id):
 def edit_libro(id):
     conn = mysql.connect()   #se conecta a la conexion mysql.init_app(app)
     cursor = conn.cursor()   #almacena lo que ejecutamos
-    cursor.execute("SELECT `inventario`.`id_stock`, `inventario`.`nombre_libro`, `inventario`.`autor`, `inventario`.`id_categoria`, `inventario`.`url_foto` FROM `biblioteca`.`inventario` WHERE id_stock=%s", (id))     #ejecuta la sentencia SQL sobre el id
+    cursor.execute("SELECT `inventario`.`id_stock`, `inventario`.`nombre_libro`, `inventario`.`autor`, `inventario`.`url_foto` FROM `biblioteca`.`inventario` WHERE id_stock=%s", (id))     #ejecuta la sentencia SQL sobre el id
     libros=cursor.fetchall()    #traemos toda la informacion
     conn.commit()    #cerramos la conexion
     return render_template('biblioteca/edit_libro.html', libros=libros)
@@ -269,13 +275,12 @@ def edit_libro(id):
 @app.route("/update", methods=['POST'])
 def update():
     _nombre=request.form['txtNombre']
-    _autor=request.form['txtCorreo']
-    _idCategoria=request.form['txtIdCategoria']
+    _autor=request.form['txtAutor']
     _foto=request.files['txtFoto']
     id=request.form['txtID']
 
-    sql = "UPDATE `biblioteca`.`inventario` SET `nombre_libro`=%s, `autor`=%s, `id_categoria`=%s, `url_foto`=%s WHERE id_stock=%s;"
-    datos=(_nombre,_autor,_idCategoria,_foto,id)
+    sql = "UPDATE `biblioteca`.`inventario` SET `nombre_libro`=%s, `autor`=%s WHERE id_stock=%s;"
+    datos=(_nombre,_autor,id)
 
     conn=mysql.connect()
     cursor=conn.cursor()

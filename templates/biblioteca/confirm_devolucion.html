@@ -1,0 +1,40 @@
+{% include 'header.html' %}
+<nav class="p-1 bg-info" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{url_for('index')}}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Devolver Libro</li>
+    </ol>
+</nav>
+<div class="container">
+    <h4 class="m-3">Confirmar devolución</h4>
+    {% for libro in libros %}
+    <form class="row g-3 p-3" method="post" action="/devolver" enctype="multipart/form-data">
+        <div class="col-md-2">
+            <label class="form-label" for="txtID">ID:</label>
+            <input class="form-control" type="text" value="{{libro[0]}}" name="txtID" id="txtID">
+        </div>
+        <div class="col-md-5">
+            <label class="form-label" for="txtNombre">Nombre:</label>
+            <input class="form-control" type="text" value="{{libro[1]}}" name="txtNombre" id="txtNombre" disabled>
+        </div>
+        <div class="col-md-5">
+            <label class="form-label" for="txtSocio:">Socio:</label>
+            <input class="form-control" type="text" value="{{libro[2]}}" name="txtSocio" id="txtSocio" disabled>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="txtFecha">Fecha devolución:</label>
+            <input class="form-control" type="text" value="{{libro[3]}}" name="txtFecha" id="txtFecha" disabled>
+        </div>
+        <div class="col-12">
+            <label class="form-label" for="txtFoto">
+                Foto actual:
+                    <img class="img-thumbnail" width="100" src="{{url_for('uploads', nombreFoto=libro[4])}}" alt="foto actual">
+            </label>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Devolver</button>
+        </div>
+
+    </form>
+    {% endfor %}
+{% include 'footer.html' %}
