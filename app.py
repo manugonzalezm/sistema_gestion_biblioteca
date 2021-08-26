@@ -8,10 +8,10 @@ import os #para acceder a los archivos
 app=Flask(__name__)     # creacion del objeto app de la clase Flask
 
 mysql = MySQL()     # creacion de un objeto mysql de la clase MySQL
-app.config['MYSQL_DATABASE_HOST'] = 'remotemysql.com'
-app.config['MYSQL_DATABASE_USER'] = 'yRsT5S18UV'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'npWRLL9PcG'
-app.config['MYSQL_DATABASE_DB'] = 'yRsT5S18UV'     # nombre de la base de datos
+app.config['MYSQL_DATABASE_HOST'] = 
+app.config['MYSQL_DATABASE_USER'] = 
+app.config['MYSQL_DATABASE_PASSWORD'] =
+app.config['MYSQL_DATABASE_DB'] =     # nombre de la base de datos
 mysql.init_app(app)     # Llamamos al metodo init_app de mysql con el objeto de flask como parametro
 
 CARPETA=os.path.join('uploads')     #referencia a la carpeta
