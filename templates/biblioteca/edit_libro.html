@@ -27,8 +27,12 @@
             </label>
             <input  class="form-control" type="file" name="txtFoto" id="txtFoto" value="{{libro[3]}}">
         </div>
+        <div class="col-md-6">
+            <label class="form-label" for="inputAdmin">Se requiere el codigo de administrador:</label>
+            <input class="form-control" type="password" name="inputAdmin" id="inputAdmin" onchange="stateHandle()" required>
+        </div>
         <div class="col-12">
-            <button class="btn btn-primary" type="submit">Editar</button>
+            <button class="btn btn-primary" id="botonAdmin" type="submit">Editar</button>
         </div>
 
     </form>

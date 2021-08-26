@@ -13,10 +13,14 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtCorreo">Correo electrónico:</label>
-                <input class="form-control" type="text" name="txtCorreo" id="txtCorreo" required>
+                <input class="form-control" type="email" name="txtCorreo" id="txtCorreo" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="inputAdmin">Se requiere el codigo de administrador:</label>
+                <input class="form-control" type="password" name="inputAdmin" id="inputAdmin" onchange="stateHandle()" required>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Agregar</button>
+                <button class="btn btn-primary" type="submit" id="botonAdmin">Agregar</button>
             </div>
         </form>
 {% include 'footer.html' %}
